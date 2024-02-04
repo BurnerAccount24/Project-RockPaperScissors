@@ -1,6 +1,6 @@
 function getComputerChoice() {
-	let choices = ['rock', 'paper', 'scissors'];
-	let randomNumber = Math.floor(Math.random() * choices.length);
+	const choices = ['rock', 'paper', 'scissors'];
+	const randomNumber = Math.floor(Math.random() * choices.length);
 	return choices[randomNumber];
 }
 let userScore = 0;
@@ -29,32 +29,22 @@ function playRound(playerSelection, computerSelection) {
 		return 'Invalid input. Please choose rock, paper, or scissors.';
 	}
 }
-// const playerSelection = prompt(
-// 	'choose between rock,paper and scissors'
-// ).toLocaleLowerCase();
-// const computerSelection = getComputerChoice();
-// console.log(playRound(playerSelection, computerSelection));
 
 function playGame() {
-	const playerSelection = prompt(
-		'choose between rock,paper and scissors'
-	).toLocaleLowerCase();
-	const computerSelection = getComputerChoice();
-	console.log(playRound(playerSelection, computerSelection));
-	if (computerScore > userScore) {
-		console.log(
-			`computer score: ${computerScore} vs. user score: ${userScore} `
-		);
-	} else if (userScore > computerScore) {
+	for (let round = 1; round <= 5; round++) {
+		const playerSelection = prompt(
+			'choose between rock,paper and scissors'
+		).toLocaleLowerCase();
+		const computerSelection = getComputerChoice();
+		console.log(playRound(playerSelection, computerSelection));
 		console.log(
 			`user score: ${userScore} vs. computer score: ${computerScore} `
 		);
-	} else if (userScore === computerScore) {
-		console.log(
-			`user score: ${userScore} vs. computer score: ${computerScore}`
-		);
-		console.log(typeof userScore, typeof computerScore);
+		if (round === 5) {
+			console.log(
+				`the final score is user score: ${userScore} vs. computer score: ${computerScore}`
+			);
+		}
 	}
 }
-// I think the issue is that im comparing a string and not a number
 playGame();
