@@ -3,9 +3,39 @@
 	<head>
 		<meta charset="UTF-8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<link rel="stylesheet" href="style.css" />
 		<title>Project: Rock Paper Scissors</title>
 	</head>
 	<body>
+		<div class="container">
+			<h1>rock paper scissors</h1>
+			<div class="content">
+				<div class="resultsContainer"></div>
+				<div class="btnContainer">
+					<img src="./imgs/rock.png" alt="rock" class="btn" data-value="rock" />
+					<img
+						src="./imgs/paper.png"
+						alt="paper"
+						class="btn"
+						data-value="paper"
+					/>
+					<img
+						src="./imgs/scissors.png"
+						alt="scissors"
+						class="btn"
+						data-value="scissors"
+					/>
+				</div>
+			</div>
+			<div class="replayContainer">
+				<img
+					src="./imgs/play-again.png"
+					alt="play again icon"
+					class="play-again hidden"
+				/>
+			</div>
+		</div>
+
 		<script src="script.js"></script>
 	</body>
 </html>

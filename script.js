@@ -1,50 +1,81 @@
-function getComputerChoice() {
-	const choices = ['rock', 'paper', 'scissors'];
-	const randomNumber = Math.floor(Math.random() * choices.length);
-	return choices[randomNumber];
-}
 let userScore = 0;
 let computerScore = 0;
+let playerSelection = document.querySelectorAll('.btn');
+let content = document.querySelector('.resultsContainer');
+let playAgainBtn = document.querySelector('.play-again');
+let result = document.createElement('p');
+let score = document.createElement('p');
+let finalScore = document.createElement('h3');
+content.appendChild(result);
+content.appendChild(score);
+content.appendChild(finalScore);
 
-function playRound(playerSelection, computerSelection) {
-	if (
-		(playerSelection === 'scissors' && computerSelection === 'paper') ||
-		(playerSelection === 'rock' && computerSelection === 'scissors') ||
-		(playerSelection === 'paper' && computerSelection === 'rock')
-	) {
-		return (
-			userScore++, `You win! ${playerSelection} beats ${computerSelection}`
-		);
-	} else if (
-		(computerSelection === 'scissors' && playerSelection === 'paper') ||
-		(computerSelection === 'rock' && playerSelection === 'scissors') ||
-		(computerSelection === 'paper' && playerSelection === 'rock')
-	) {
-		return (
-			computerScore++, `You lose! ${computerSelection} beats ${playerSelection}`
-		);
-	} else if (playerSelection === computerSelection) {
-		return `It's a tie! You choose ${playerSelection}, and the computer choose ${computerSelection} too`;
-	} else {
-		return 'Invalid input. Please choose rock, paper, or scissors.';
-	}
+for (let i = 0; i < playerSelection.length; i++) {
+	playerSelection[i].addEventListener('click', function (e) {
+		let value = e.target.getAttribute('data-value');
+		let computerSelection = getComputerChoice();
+		playRound(value, computerSelection);
+		playGame();
+	});
+}
+function getComputerChoice() {
+	const choices = ['rock', 'paper', 'scissors'];
+	let randomNumber = Math.floor(Math.random() * choices.length);
+	return choices[randomNumber];
 }
 
-function playGame() {
-	for (let round = 1; round <= 5; round++) {
-		const playerSelection = prompt(
-			'choose between rock,paper and scissors'
-		).toLocaleLowerCase();
-		const computerSelection = getComputerChoice();
-		console.log(playRound(playerSelection, computerSelection));
-		console.log(
-			`user score: ${userScore} vs. computer score: ${computerScore} `
-		);
-		if (round === 5) {
-			console.log(
-				`the final score is user score: ${userScore} vs. computer score: ${computerScore}`
+function playRound(playerSelection, computerSelection) {
+	while (userScore < 5 && computerScore < 5) {
+		if (
+			(playerSelection === 'scissors' && computerSelection === 'paper') ||
+			(playerSelection === 'rock' && computerSelection === 'scissors') ||
+			(playerSelection === 'paper' && computerSelection === 'rock')
+		) {
+			userScore++;
+			return (
+				(result.textContent = `You win! ${playerSelection} beats ${computerSelection}`),
+				(score.textContent = `Player: ${userScore} - Computer: ${computerScore}`)
+			);
+		} else if (
+			(computerSelection === 'scissors' && playerSelection === 'paper') ||
+			(computerSelection === 'rock' && playerSelection === 'scissors') ||
+			(computerSelection === 'paper' && playerSelection === 'rock')
+		) {
+			computerScore++;
+			return (
+				(result.textContent = `You lose. ${computerSelection} beats ${playerSelection}`),
+				(score.textContent = `Player: ${userScore} - Computer: ${computerScore}`)
+			);
+		} else if (playerSelection === computerSelection) {
+			return (
+				(result.textContent = `It's a Draw!`),
+				(score.textContent = `Player: ${userScore} - Computer : ${computerScore}`)
 			);
 		}
 	}
 }
-playGame();
+
+function playGame() {
+	if (computerScore === 5 || userScore === 5) {
+		result.textContent = '';
+		if (computerScore === 5) {
+			finalScore.textContent = `Computer wins the game!`;
+			finalScore.style.color = 'red';
+		} else {
+			finalScore.textContent = `Player wins the game!`;
+			finalScore.style.color = 'green';
+		}
+		playAgainBtn.classList.remove('hidden');
+	}
+}
+playAgainBtn.addEventListener('click', () => {
+	userScore = 0;
+	computerScore = 0;
+	result.textContent = '';
+	score.textContent = '';
+	finalScore.textContent = '';
+	playAgainBtn.classList.add('hidden');
+
+	playRound(value, computerSelection);
+	playGame();
+});
